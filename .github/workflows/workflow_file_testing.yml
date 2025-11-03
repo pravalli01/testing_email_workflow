@@ -35,7 +35,6 @@ jobs:
       - name: Install MTA Plugin
         run: |
           cf8 install-plugin -f https://github.com/cloudfoundry-incubator/multiapps-cli-plugin/releases/latest/download/multiapps-plugin.linux64
-      
       # Step 6: Build MTA Archive (creates mta.tar)
       - name: Build MTA Archive
         run: mbt build -t gen --mtar mta.tar
@@ -44,7 +43,7 @@ jobs:
       - name: Create TAR Archive from Source Code
         run: |
           mkdir -p gen
-          tar -cvf gen/testing_backup.tar ./
+          tar -cvf gen/project_backup.tar ./
           echo "Generated TAR file:"
           ls -lh gen/
       # Step 8: Get Microsoft Graph API Access Token
@@ -66,7 +65,7 @@ jobs:
           ONEDRIVE_USER: ${{ secrets.ONEDRIVE_USER }}
         run: |
           echo "Uploading project_backup.tar to OneDrive..."
-          curl -X PUT "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/testing_backup.tar:/content" \
+          curl -X PUT "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/project_backup.tar:/content" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/x-tar" \
             --data-binary @gen/mta.tar
@@ -77,7 +76,7 @@ jobs:
           ONEDRIVE_USER: ${{ secrets.ONEDRIVE_USER }}
         run: |
           echo "Creating shareable link..."
-          curl -X POST "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/testing_backup.tar:/createLink" \
+          curl -X POST "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/project_backup.tar:/createLink" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -d '{"type": "view", "scope": "anonymous"}' \
