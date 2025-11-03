@@ -64,7 +64,7 @@ jobs:
           ONEDRIVE_USER: ${{ secrets.ONEDRIVE_USER }}
         run: |
           echo "Uploading project_backup.tar to OneDrive..."
-          curl -X PUT "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/project_backup.tar:/content" \
+          curl -X PUT "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/project_testing_backup.tar:/content" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/x-tar" \
             --data-binary @gen/mta.tar
@@ -76,7 +76,7 @@ jobs:
           ONEDRIVE_USER: ${{ secrets.ONEDRIVE_USER }}
         run: |
           echo "Creating shareable link..."
-          curl -X POST "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/project_backup.tar:/createLink" \
+          curl -X POST "https://graph.microsoft.com/v1.0/users/${ONEDRIVE_USER}/drive/root:/testing_project_backup.tar:/createLink" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -d '{"type": "view", "scope": "anonymous"}' \
