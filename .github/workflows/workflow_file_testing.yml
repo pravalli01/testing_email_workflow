@@ -24,60 +24,37 @@ jobs:
 
         uses: actions/checkout@v4
  
-      # # Step 2: Load Environment Variables
-
-      # - name: Load Environment Variables
-
-      #   working-directory: srv
-
-      #   run: |
-
-      #     echo "${{ secrets.ENV_EUTEST }}" > .env
- 
       # Step 3: Install Cloud Foundry CLI (v8)
 
       - name: Install Cloud Foundry CLI
-
         run: |
-
           curl -sL "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=8.8.3&source=github-rel%22 | tar -zx
-
           sudo mv cf8 /usr/local/bin/
-
           cf8 --version
  
       # Step 4: Install MBT (Multi-Target Application Build Tool)
 
       - name: Install MBT
-
         run: npm install -g mbt
  
       # Step 5: Install MTA Plugin for Cloud Foundry
 
       - name: Install MTA Plugin
-
         run: |
-
           cf8 install-plugin -f https://github.com/cloudfoundry-incubator/multiapps-cli-plugin/releases/latest/download/multiapps-plugin.linux64
  
       # Step 6: Build MTA Archive (creates mta.tar)
 
       - name: Build MTA Archive
-
         run: mbt build -t gen --mtar mta.tar
  
       # Step 7: Create TAR file from project source
 
       - name: Create TAR Archive from Source Code
-
         run: |
-
           mkdir -p gen
-
           tar -cvf gen/project_backup.tar ./
-
           echo "Generated TAR file:"
-
           ls -lh gen/
  
       # Step 8: Get Microsoft Graph API Access Token
