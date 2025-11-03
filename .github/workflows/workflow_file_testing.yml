@@ -17,7 +17,7 @@ jobs:
       - name: Generate .tar file
         run: |
           mkdir output
-          echo "Sample data for OneDrive upload" > output/sample.txt
+          echo "Sample data for OneDrive is upload" > output/sample.txt
           tar -cvf report.tar output/
 
       - name: Get access token from Microsoft Graph
@@ -57,3 +57,4 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"type": "view", "scope": "anonymous"}' \
             | jq -r '.link.webUrl'
+
