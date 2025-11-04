@@ -1,0 +1,40 @@
+---
+_schema-version: '3.1'
+ID: core
+version: 1.0.0
+description: "EPE Core Microservice"
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  - name: core
+    type: nodejs
+    path: srv
+    parameters:
+      buildpack: nodejs_buildpack
+      keep-existing-routes: true
+      disk-quota: 512M
+      memory: 128M
+      command: npm run start:prod
+    properties:
+      npm_config_cache: .npmcache
+      npm_config_prefer_offline: true
+    build-parameters:
+      builder: npm
+      ignore:
+        - default-*.json
+        - "*cache*"
+        - "*node_modules*"
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: autoscaler-microservices
+
+resources:
+  - name: autoscaler-microservices
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: autoscaler
+      service-plan: standard
