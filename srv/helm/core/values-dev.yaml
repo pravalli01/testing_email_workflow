@@ -1,0 +1,17 @@
+image:
+  repository: cloud4students/ms-core-dev
+
+gateway:
+  name: si6-apps-gateway
+
+hosts:  
+  - api.si6tech.in
+
+prefix: 
+  - /core
+
+env:
+  - name: "NEXTAUTH_URL"
+    value: "https://portal.si6tech.in/"  
+  - name: "PORT"
+    value: "6001" 

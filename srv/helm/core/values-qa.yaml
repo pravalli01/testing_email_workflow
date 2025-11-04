@@ -1,0 +1,17 @@
+image:
+  repository: cloud4students/ms-core-qa
+
+gateway:
+  name: qa-gateway
+
+hosts:  
+  - api.si6tech.co.in
+
+prefix: 
+  - /core
+
+env:
+  - name: "NEXTAUTH_URL"
+    value: "https://portal.si6tech.co.in/"  
+  - name: "PORT"
+    value: "6001" 
